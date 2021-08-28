@@ -2,6 +2,8 @@ var date = moment();
 $("#currentDay").text(date.format("dddd, MMMM Do YYYY, h:mm:ss a"));
 
 var container = $(".container");
+var button = $(".saveBtn");
+var textArea = $(".text-save");
 
 var times = [
     "9am",
@@ -14,6 +16,8 @@ var times = [
     "4pm",
     "5pm"
 ]
+    
+getStorage();
 
 for (i = 0; i < 9; i++) {
     var className = "present";
@@ -29,16 +33,28 @@ for (i = 0; i < 9; i++) {
     }
 
     const row = "tableRow" + i;
+
     container.append(
             '<tr class="row">'+
             '<th class="hour">' + times[i] + '</th>'+
-            '<td id="colorCoded1" class="' + className + '" contenteditable="true"></td>'+
-            '<td class="saveBtn" id="' + row + '">'+
-            '<span><i class="fas fa-save"></i></span>'+
+            '<td class="' + className + ' text-save" contenteditable="true"></td>'+
+            '<td class="saveBtn">'+
+            '<span><i class="fas fa-save" id="' + row + '"></i></span>'+
             '</td>'+
-          '</tr>');
+            '</tr>');
 
     $("#tableRow" + i).click(function() {
         alert("hi i'm " + row);
+        setStorage();
     });
+}
+
+function setStorage() {
+    localStorage.setItem("text", textArea.value);
+    console.log(localStorage);
+}
+
+function getStorage() {
+    var lastRender = localStorage.getItem("textArea");
+    textArea.textContent = lastRender;
 }
