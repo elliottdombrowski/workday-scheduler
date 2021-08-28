@@ -1,5 +1,15 @@
 var date = moment();
-$("#currentDay").text(date.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+var today = moment().format("MMM Do, YYYY, hh A");
+// $("#currentDay").text(date.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+
+function setTime() {
+    setInterval(function() {
+        today = moment().format("MMM Do, YYYY, hh A");
+        $("#currentDay").text(today);
+    }, 1000);
+  }
+
+setTime();
 
 var container = $(".container");
 var button = $(".saveBtn");
@@ -49,12 +59,22 @@ for (i = 0; i < 9; i++) {
     });
 }
 
+//
 function setStorage() {
-    localStorage.setItem("text", textArea.value);
-    console.log(localStorage);
+    $('.text-save').on("click",function(event){
+        event.preventDefault();
+        var timeblock = $(this).attr('id').split('-')[0]
+        var userplan = $(`#${timeblock}-plan`).val()
+        localStorage.setItem(timeblock, userplan);
+        console.log(timeblock,userplan);
+    })
 }
+// function setStorage() {
+//     localStorage.setItem("text", textArea.value);
+//     console.log(localStorage);
+// }
 
 function getStorage() {
-    var lastRender = localStorage.getItem("textArea");
+    var lastRender = localStorage.getItem("text");
     textArea.textContent = lastRender;
 }
